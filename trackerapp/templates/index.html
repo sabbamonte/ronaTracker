@@ -1,0 +1,12 @@
+{% extends "trackerapp/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <h2 style="font-family: 'Crimson Text', serif; text-align: center;">Covid Notifications</h2>
+    
+    <div class="container shadow-lg p-3 mb-5 bg-white rounded" id="index-view">
+        <div class="background" style="background-color: black;">
+            <h4 style="font-family: 'Crimson Text', serif; text-align: center;"><a href="{% url 'profile' post.user %}" id="profile" style="color: white">{{post.user}}</a></h4>
+        </div>
+    </div>
+{% endblock %}
