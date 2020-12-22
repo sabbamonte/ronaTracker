@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import New_Post, Cities
+from .models import New_Post
 
 # Register your models here.
 admin.site.register(New_Post)
-admin.site.register(Cities)

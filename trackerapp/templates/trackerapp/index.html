@@ -4,18 +4,18 @@
 {% block body %}
     <div class="new_post">
         <h2 style="font-family: 'Crimson Text', serif; text-align: center;">New Post</h2>
+        <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
         <div class="container new_post shadow-lg p-3 mb-5 bg-white rounded">
-            <form action="{% url 'index' %}" method="POST">
-                <div class="form-group">
-                    {% csrf_token %}
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputCity">City or Neighborhood</label>
-                            <input type="text" class="form-control" id="inputCity">
-                        </div>
-                            <div class="form-group col-md-4">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputCity">City or Neighborhood</label>
+                        <input type="text" class="form-control" id="inputCity" name="city">
+                    </div>
+                        <div class="form-group col-md-4">
                             <label for="inputState">State</label>
-                            <select id="inputState" class="form-control">
+                            <select id="inputState" class="form-control" name="state">
                                 <option selected>Choose...</option>
                                 <option value="AL">Alabama</option>
                                 <option value="AK">Alaska</option>
@@ -72,35 +72,47 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label for="inputZip">Zip</label>
-                            <input type="text" class="form-control" id="inputZip">
+                            <input type="text" class="form-control" id="inputZip" name="zip">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputName">Your Name</label>
-                            <input type="text" class="form-control" id="inputName">
+                            <input type="text" class="form-control" id="inputName" name="name">
                         </div>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="infected">
-                        <label class="form-check-label" for="inlineCheckbox1">Infected</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="exposed">
-                        <label class="form-check-label" for="inlineCheckbox2">Exposed</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="healthy">
-                        <label class="form-check-label" for="inlineCheckbox3">Healthy</label>
-                    </div>
-                    <textarea class="textarea form-control" name="post" rows="3" placeholder="Add more details here" style="text-align: center;"></textarea> 
                 </div>
-                    <input type="submit" class="btn btn-dark" style="position:center; margin-left:500px;">
-            </form>
-        </div>
+                <div class="form-group col-md-4">
+                    <label for="inputDiagnosis">Diagnosis</label>
+                    <select id="inputDiagnosis" class="form-control" name="diagnosis">
+                        <option selected="true" disabled="true">Choose...</option>
+                        <option>Infected</option>
+                        <option>Exposed</option>
+                        <option>Healthy</option>
+                    </select>
+                </div>
+                <textarea class="textarea form-control" name="post" rows="3" placeholder="Add more details here" style="text-align: center;"></textarea> 
+            </div>
+            <input type="submit" class="submit_post btn btn-dark" style="position:center; margin-left:500px;">
+            </div>
+        </form>
     </div>
+       
     <h2 style="font-family: 'Crimson Text', serif; text-align: center;">All Activity</h2>
-    <div class="container shadow-lg p-3 mb-5 bg-white rounded" id="index-view">
-        <div class="background" style="background-color: black;">
-            <h4 style="font-family: 'Crimson Text', serif; text-align: center;">NYC</h4>
+    {% for post in all_posts %}
+        <div class="container shadow-lg p-3 mb-5 bg-white rounded">
+            <div class="background" style="background-color: black;">
+                <h4 style="font-family: 'Crimson Text', serif; text-align: center;">NYC</h4>
+            </div>
+            <hr>
+            <div id="post-view">
+                <p class="text"> {{post.post}} </p>
+            </div>
+            <br>
+            <div id="timestamp">
+                <p style="font-size:10px;"> Posted on: {{post.timestamp}} </p>
+            </div>
         </div>
-    </div>
+    {% endfor %}
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'trackerapp/script.js' %}"></script>
 {% endblock %}
