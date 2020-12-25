@@ -94,18 +94,36 @@
             </div>
         </form>
     </div>
-       
-    <h2 style="font-family: 'Crimson Text', serif; text-align: center;">All Activity</h2>
+    <hr>
+    <br>
+    <h2 style="font-family: 'Crimson Text', serif; text-align: center;">Activity in all cities</h2>
     {% for post in all_posts %}
         <div class="container shadow-lg p-3 mb-5 bg-white rounded">
             <div class="background" style="background-color: black;">
-                <h4 style="font-family: 'Crimson Text', serif; text-align: center;">NYC</h4>
+                <h4 style="font-family: 'Crimson Text', serif; text-align: center; color:white">{{post.city}},  {{post.state}}</h4>
             </div>
+            {% if post.diagnosis == "Exposed" %}
+                <div class="alert alert-warning" role="alert">
+                    <p class="text"> {{post.diagnosis}}</p>
+                </div>
+            {% endif %}
+            {% if post.diagnosis == "Infected" %}
+                <div class="alert alert-danger" role="alert">
+                    <p class="text"> {{post.diagnosis}}</p>
+                </div>
+            {% endif %}
+            {% if post.diagnosis == "Healthy" %}
+                <div class="alert alert-success" role="alert">
+                    <p class="text"> {{post.diagnosis}}</p>
+                </div>
+            {% endif %}
             <hr>
+            <div id="name">
+                <p class="text"> {{post.name}} says:</p>
+            </div>
             <div id="post-view">
                 <p class="text"> {{post.post}} </p>
             </div>
-            <br>
             <div id="timestamp">
                 <p style="font-size:10px;"> Posted on: {{post.timestamp}} </p>
             </div>
