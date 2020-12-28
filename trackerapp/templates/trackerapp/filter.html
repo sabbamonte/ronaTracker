@@ -1,0 +1,47 @@
+{% extends "trackerapp/layout.html" %}
+{% load static %}
+
+{% block body %}
+{% if message %}
+<h2 style="font-family: 'Crimson Text', serif; text-align: center;">{{message}}</h2>
+{% endif %}
+
+{% if not message %}
+{% if not filter_list %}
+<h2 style="font-family: 'Crimson Text', serif; text-align: center;">No activity reported in your area</h2>
+{% else %}
+<h2 style="font-family: 'Crimson Text', serif; text-align: center;">Activity in {{search}}</h2>
+    {% for post in filter_list %}
+        <div class="container shadow-lg p-3 mb-5 bg-white rounded index-view">
+            {% if post.diagnosis == "Exposed" %}
+                <div class="alert alert-warning" role="alert">
+                    <p class="text"> {{post.diagnosis}}</p>
+                </div>
+            {% endif %}
+            {% if post.diagnosis == "Infected" %}
+                <div class="alert alert-danger" role="alert">
+                    <p class="text"> {{post.diagnosis}}</p>
+                </div>
+            {% endif %}
+            {% if post.diagnosis == "Healthy" %}
+                <div class="alert alert-success" role="alert">
+                    <p class="text"> {{post.diagnosis}}</p>
+                </div>
+            {% endif %}
+            <hr>
+            <div id="name">
+                <p class="text"> {{post.name}} says:</p>
+            </div>
+            <div id="post-view">
+                <p class="text"> {{post.post}} </p>
+            </div>
+            <div id="timestamp">
+                <p style="font-size:10px;"> Posted on: {{post.timestamp}} </p>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+{% endif %}
+        <h4 style="text-align: center;"><a href="{% url 'index' %}" style="font-family: 'Crimson Text', serif; color:black;"> Back to Main Page </a></h4>
+
+{% endblock %}

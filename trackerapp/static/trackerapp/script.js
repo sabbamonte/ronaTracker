@@ -1,29 +1,28 @@
 // load the DOM first
 document.addEventListener('DOMContentLoaded', function() {
 
-    button =  document.getElementsByClassName('submit_post')
-    document.getElementsByClassName('submit_post').onsubmit = function () {
-        var states = getElementById('inputState')
-        var selected_state= states.options[states.selectedIndex].value;
-        console.log(selected_state)
-        if (document.getElementsByClassName('checkbox').checked === true) {
-            status = document.getElementsByClassName('checkbox').value
-            console.log(status)
-            add_post(status, state)
-        }
+    document.getElementsByClassName('filter-view').style.display = 'none'
 
-    }
+    document.getElementById('submit').onsubmit = function() {
+       var city = document.getElementById('search').innerHTML
+       search(city)
+   }
 
 });
 
-function add_post(status, state) {
+function search (city) {
 
-    fetch('/add', {
-        method: "POST",
-        body: JSON.stringify ({
-            state: state,
-            diagnosis: status
+    fetch('/all')
+    .then(response => response.json())
+    .then(search => { 
+        Array.prototype.forEach.call(search.search, filter => {
+            if (city.toUpperCase() == filter.toUpperCase()) {
+                document.getElementsByClassName('filter-view').style.display = 'block'
+                document.getElementsByClassName('filter-view').style.display = 'none'
+
+                var filter_city = createElement('div')
+                filter_city.className = 'container shadow-lg p-3 mb-5 bg-white rounded'
+            }
         })
-
     })
 }
