@@ -1,10 +1,26 @@
-.red-view {
-    background-color: red;
+.city_search {
+    margin-right: -350px;
 }
 
-#map {
-    height: 400px;
-    /* The height is 400 pixels */
-    width: 100%;
-    /* The width is the width of the web page */
-  }
+.zip_search {
+    margin-right: 50px;
+}
+
+.container {
+    width: 900px;
+}
+
+.text, #city {
+    text-align: center;
+    font-family: 'Crimson Text', serif;
+}
+
+.info {
+    font-size: 22px;
+    font-style: italic;
+}
+
+.alert {
+    font-size: 25px;
+    text-transform: uppercase;
+}

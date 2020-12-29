@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title> {% block title %} 'ronaTracker {% endblock %} </title>
+        <title style="text-align: center;"> {% block title %} 'ronaTracker {% endblock %} </title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Work+Sans:400,700" rel="stylesheet">
         <link href="{% static 'trackerapp/styles.css' %}" rel="stylesheet">
@@ -13,10 +13,12 @@
     <body>
         <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand"> 'ronaTracker </a>
+        <div class="form-group city_search">
             <form class="form-inline" action="{% url 'filter' %}" method="GET">
+                {% csrf_token %}
                 <input class="form-control mr-sm-2" id="search" type="search" placeholder="City" aria-label="Search" name="city">
                 <div class="form-group col-md-4">
-                            <select id="inputState" class="form-control" name="state">
+                            <select id="inputState" class="form-control" name="state" style="width:220px;">
                                 <option selected>Choose State...</option>
                                 <option value="AL">Alabama</option>
                                 <option value="AK">Alaska</option>
@@ -70,9 +72,17 @@
                                 <option value="WI">Wisconsin</option>
                                 <option value="WY">Wyoming</option>
                             </select>
-                        </div>
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search in your city</button>
+                </div>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="margin-right:60px;">Search your city</button>
             </form>
+        </div>
+            <div class="form-group zip_search">
+            <form class="form-inline" action="{% url 'filter' %}" method="GET">
+                {% csrf_token %}
+                <input class="form-control mr-sm-2" id="zip_code" type="search" placeholder="Zip Code" aria-label="Search" name="zip">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="margin-right:-40px;">Search your zip code</button>
+            </form>
+            </div>
         </nav>
         <hr>
         <br>    

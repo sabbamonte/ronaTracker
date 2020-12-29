@@ -2,6 +2,11 @@
 {% load static %}
 
 {% block body %}
+<div id="info">
+    <p class="text info">Help your community keep track of Covid-19 and let them know if you've been exposed, infected
+        or know of activity around you. <br> Please be specific in your post. The more detailed the information the better it helps people track it.</p>
+</div>
+<br>
     <div class="new_post">
         <h2 style="font-family: 'Crimson Text', serif; text-align: center;">New Post</h2>
         <form action="{% url 'index' %}" method="post" name="new_post">
@@ -88,7 +93,7 @@
                         <option>Healthy</option>
                     </select>
                 </div>
-                <textarea class="textarea form-control" name="post" rows="3" placeholder="Add more details here" style="text-align: center;"></textarea> 
+                <textarea class="textarea form-control" name="post" rows="3" placeholder="Please specify your latest movements" style="text-align: center;"></textarea> 
             </div>
             <input type="submit" class="submit_post btn btn-dark" style="position:center; margin-left:500px;">
             </div>
@@ -96,7 +101,7 @@
     </div>
     <hr>
     <br>
-    <h2 style="font-family: 'Crimson Text', serif; text-align: center;">Activity in all cities</h2>
+    <h2 style="font-family: 'Crimson Text', serif; text-align: center;">Latest activity across the USA</h2>
     {% for post in all_posts %}
         <div class="container shadow-lg p-3 mb-5 bg-white rounded index-view">
             <div class="background" style="background-color: black;">
@@ -104,36 +109,42 @@
             </div>
             {% if post.diagnosis == "Exposed" %}
                 <div class="alert alert-warning" role="alert">
-                    <p class="text"> {{post.diagnosis}}</p>
+                    <strong><p class="text alert"> {{post.diagnosis}}</p></strong>
                 </div>
             {% endif %}
             {% if post.diagnosis == "Infected" %}
                 <div class="alert alert-danger" role="alert">
-                    <p class="text"> {{post.diagnosis}}</p>
+                    <strong><p class="text alert"> {{post.diagnosis}}</p></strong>
                 </div>
             {% endif %}
             {% if post.diagnosis == "Healthy" %}
                 <div class="alert alert-success" role="alert">
-                    <p class="text"> {{post.diagnosis}}</p>
+                    <strong><p class="text alert"> {{post.diagnosis}}</p></strong>
                 </div>
             {% endif %}
             <hr>
+            {% if post.post %}
             <div id="name">
                 <p class="text"> {{post.name}} says:</p>
             </div>
             <div id="post-view">
-                <p class="text"> {{post.post}} </p>
+                <h5><p class="text"> {{post.post}} </p></h5>
             </div>
-            <div id="timestamp">
-                <p style="font-size:10px;"> Posted on: {{post.timestamp}} </p>
+            <hr>
+            {% endif %}
+            <div id="zip">
+                <h5 style="font-family: 'Crimson Text', serif; text-align: center;">Zip Code {{post.zip}}</h5>
             </div>
             <iframe
-                width="930"
+                width="865"
                 height="400"
                 frameborder="0" style="border:0"
                 src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBSHld7MH8LKj5AU84uU3dPlxuD6eedSNU
-                    &q={{post.city}}, {{post.state}}" allowfullscreen>
+                    &q={{post.city}}, {{post.state}}, {{post.zip}}" allowfullscreen>
             </iframe>
+            <div id="timestamp">
+                <p style="font-size:10px;"> Posted on: {{post.timestamp}} </p>
+            </div>
         </div>
     {% endfor %}
 {% endblock %}

@@ -27,28 +27,48 @@ def index(request):
             return render(request, "trackerapp/filter.html", {"message": "Please choose a diagnosis"})
         new_post.diagnosis = request.POST['diagnosis'] 
         new_post.name = request.POST['name']
+        if not request.POST['post']:
+            return render(request, "trackerapp/filter.html", {"message": "Please specify your latest movements"})
         new_post.post = request.POST['post']
         new_post.save()
         return HttpResponseRedirect(reverse("index"))  
 
 def filter(request):
 
-    # Show all posts in a list depending on the city and state entered by user
-    if request.method == "GET":
-        search = request.GET['city']
-        if not search:
-            return render(request, "trackerapp/filter.html", {"message": "Please type in a city"})
+    # Get all posts and create empty list
+    all_cities = New_Post.objects.all()
+    filter_list = []
+
+    # Error check for city and state search
+    if request.method == "GET" and "city" in request.GET:
         state = request.GET['state']
+        search = request.GET['city']
+        if not search and not state:
+            return render(request, "trackerapp/filter.html", {"message": "Please type in a city"})
         if not state or state == "Choose State...":
             return render(request, "trackerapp/filter.html", {"message": "Please choose a state"})
 
-        # Check if state and city entered match database and save in a list
-        all_cities = New_Post.objects.all()
-        filter_list = []
+    # Check if state, city and zip code entered match database and save in list
+        if not search:
+            # Only check state if city not entered
+            for city in all_cities:
+                if state.casefold() == city.state.casefold():
+                    filter_list.append(city)
+        else:
+            for city in all_cities:
+                if search.casefold() == city.city.casefold() and state.casefold() == city.state.casefold():
+                    filter_list.append(city)
+        return render(request, "trackerapp/filter.html", {"filter_list":filter_list, "search":search, "state":state})
+
+    if request.method == "GET" and "zip" in request.GET:
+        zip_code = request.GET['zip']
+        if not request.GET['zip']:
+            return render(request, "trackerapp/filter.html", {"message": "Please enter a zip code"})
         for city in all_cities:
-            if search.casefold() == city.city.casefold() and state.casefold() == city.state.casefold():
+            if int(zip_code) == city.zip:
                 filter_list.append(city)
-            
-        return render(request, "trackerapp/filter.html", {"filter_list":filter_list, "search":search})
+        return render(request, "trackerapp/filter.html", {"filter_list":filter_list, "state":zip_code})
+        
+    
 
     
