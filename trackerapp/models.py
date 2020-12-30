@@ -10,6 +10,7 @@ class New_Post(models.Model):
     diagnosis = models.CharField(max_length=200, default=None)
     city = models.CharField(max_length=20, default=None)
     state = models.CharField(max_length=20, default=None)
-    zip = models.PositiveIntegerField(blank=False, validators=[MaxValueValidator(9950)], default=None)
+    zip = models.PositiveIntegerField(blank=False, validators=[MaxValueValidator(99950)], default=None)
+    is_archived = models.BooleanField(default=False)
 
 

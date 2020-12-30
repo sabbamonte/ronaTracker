@@ -1,9 +1,11 @@
 .city_search {
     margin-right: -350px;
+    margin-top: 20px;
 }
 
 .zip_search {
     margin-right: 50px;
+    margin-top: 20px;
 }
 
 .container {
@@ -23,4 +25,26 @@
 .alert {
     font-size: 25px;
     text-transform: uppercase;
+}
+
+@keyframes move {
+    from {
+        right: -100%;
+    }
+    to {
+        right: 0%;
+    }
+}
+
+#info {
+    position: relative;
+    animation-name: move;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+.diagnosis {
+    margin-left: 425px;
+    margin-top: -86px;
+    width: 200px;
 }

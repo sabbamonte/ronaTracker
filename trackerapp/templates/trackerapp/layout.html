@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title style="text-align: center;"> {% block title %} 'ronaTracker {% endblock %} </title>
+        <title> {% block title %} 'ronaTracker {% endblock %} </title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Work+Sans:400,700" rel="stylesheet">
         <link href="{% static 'trackerapp/styles.css' %}" rel="stylesheet">
@@ -12,7 +12,7 @@
     </head>
     <body>
         <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand"> 'ronaTracker </a>
+        <a class="navbar-brand" style="font-family: 'Crimson Text', serif; margin-left: 30px;"> 'ronaTracker </a>
         <div class="form-group city_search">
             <form class="form-inline" action="{% url 'filter' %}" method="GET">
                 {% csrf_token %}

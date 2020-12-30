@@ -3,9 +3,16 @@
 
 {% block body %}
 <div id="info">
-    <p class="text info">Help your community keep track of Covid-19 and let them know if you've been exposed, infected
-        or know of activity around you. <br> Please be specific in your post. The more detailed the information the better it helps people track it.</p>
+    <p class="text info">Help your community keep track of Covid-19 in the United States. Let them know if you've been exposed, infected
+        or know of activity around you. <br> Be specific in your post. The more detailed the information the better it helps people track it.</p>
 </div>
+<br>
+<hr>
+<div class="p-3 mb-2 bg-warning text-dark">
+    <h4><p class="text">Highest activity reported: <strong>{{max_city}}</strong> with <strong>{{max_count}}</strong> posts.</p></h4>
+    <h4><p class="text">Highest rate of infection reported <strong>{{max_city_infection}}</strong> with <strong>{{max_count_infection}} </strong> infection(s).</p></h4>
+</div>
+<hr>
 <br>
     <div class="new_post">
         <h2 style="font-family: 'Crimson Text', serif; text-align: center;">New Post</h2>
@@ -20,7 +27,7 @@
                     </div>
                         <div class="form-group col-md-4">
                             <label for="inputState">State</label>
-                            <select id="inputState" class="form-control" name="state">
+                            <select id="inputState" class="form-control" name="state" style="width:200px;">
                                 <option selected>Choose...</option>
                                 <option value="AL">Alabama</option>
                                 <option value="AK">Alaska</option>
@@ -75,7 +82,7 @@
                                 <option value="WY">Wyoming</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-2" style="margin-left:-80px;">
                             <label for="inputZip">Zip</label>
                             <input type="text" class="form-control" id="inputZip" name="zip">
                         </div>
@@ -84,7 +91,7 @@
                             <input type="text" class="form-control" id="inputName" name="name">
                         </div>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-4 diagnosis">
                     <label for="inputDiagnosis">Diagnosis</label>
                     <select id="inputDiagnosis" class="form-control" name="diagnosis">
                         <option selected="true" disabled="true">Choose...</option>
@@ -95,14 +102,14 @@
                 </div>
                 <textarea class="textarea form-control" name="post" rows="3" placeholder="Please specify your latest movements" style="text-align: center;"></textarea> 
             </div>
-            <input type="submit" class="submit_post btn btn-dark" style="position:center; margin-left:500px;">
+            <input type="submit" class="submit_post btn btn-dark" style="margin-left:400px;">
             </div>
         </form>
     </div>
     <hr>
     <br>
     <h2 style="font-family: 'Crimson Text', serif; text-align: center;">Latest activity across the USA</h2>
-    {% for post in all_posts %}
+    {% for post in page_obj %}
         <div class="container shadow-lg p-3 mb-5 bg-white rounded index-view">
             <div class="background" style="background-color: black;">
                 <h4 style="font-family: 'Crimson Text', serif; text-align: center; color:white" id="city">{{post.city}},  {{post.state}}</h4>
@@ -147,4 +154,23 @@
             </div>
         </div>
     {% endfor %}
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item disabled">
+            {% if page_obj.has_previous %}
+                <li class="page-item enabled">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+          </li>
+            {% endif %}
+        <li class="page-link"> Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</li>
+
+        <li class="page-item">
+        {% if page_obj.has_next %}
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% endif %}
+        </ul>
+      </nav>
 {% endblock %}
