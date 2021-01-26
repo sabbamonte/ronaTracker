@@ -13,4 +13,9 @@ class New_Post(models.Model):
     zip = models.PositiveIntegerField(blank=False, validators=[MaxValueValidator(99950)], default=None)
     is_archived = models.BooleanField(default=False)
 
+    def valid_zip(self):
+        return self.zip != 0 and len(str(self.zip)) <= 5
+    
+    
+
 

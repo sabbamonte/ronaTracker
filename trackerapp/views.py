@@ -111,7 +111,7 @@ def filter(request):
         for city in all_cities:
             if int(zip_code) == city.zip:
                 filter_list.append(city)
-        return render(request, "trackerapp/filter.html", {"filter_list":filter_list.sort(reverse=True), "state":zip_code})
+        return render(request, "trackerapp/filter.html", {"filter_list":filter_list, "state":zip_code})
         
     
 
